@@ -68,7 +68,7 @@ async def analyze(request):
     prediction = learn.predict(img)[0]
     prob = list(sorted(zip(classes, list(learn.predict(img)[2].numpy())), key=lambda x: -x[1]))
     return JSONResponse({
-        'result': str(prediction)
+        'result': str(prediction),
         'prob': str(prob)
     })
 
