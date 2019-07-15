@@ -1,9 +1,12 @@
-import aiohttp
 import asyncio
-import uvicorn
-from fastai import *
-from fastai.vision import *
+import sys
 from io import BytesIO
+from pathlib import Path
+
+import aiohttp
+import uvicorn
+from fastai.basic_train import load_learner
+from fastai.vision.image import open_image
 from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
@@ -17,16 +20,18 @@ classes = ['black', 'grizzly', 'teddys']
 # export_file_name = 'cuisine'
 # classes = ['mexican', 'indian', 'japanese', 'italian', 'chinese']
 
-
 path = Path(__file__).parent
 
 app = Starlette()
-app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_headers=['X-Requested-With', 'Content-Type'])
+app.add_middleware(
+    CORSMiddleware, allow_origins=['*'], allow_headers=['X-Requested-With', 'Content-Type']
+)
 app.mount('/static', StaticFiles(directory='app/static'))
 
 
 async def download_file(url, dest):
-    if dest.exists(): return
+    if dest.exists():
+        return
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             data = await response.read()
@@ -42,7 +47,10 @@ async def setup_learner():
     except RuntimeError as e:
         if len(e.args) > 0 and 'CPU-only machine' in e.args[0]:
             print(e)
-            message = "\n\nThis model was trained with an old version of fastai and will not work in a CPU environment.\n\nPlease update the fastai library in your training environment and export your model again.\n\nSee instructions for 'Returning to work' at https://course.fast.ai."
+            message = """\n\nThis model was trained with an old version of fastai and will
+                not work in a CPU environment.\n\nPlease update the fastai library in your training
+                environment and export your model again.\n\nSee instructions for
+                'Returning to work' at https://course.fast.ai."""
             raise RuntimeError(message)
         else:
             raise
@@ -67,10 +75,7 @@ async def analyze(request):
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)[0]
     prob = list(sorted(zip(classes, list(learn.predict(img)[2].numpy())), key=lambda x: -x[1]))
-    return JSONResponse({
-        'result': str(prediction),
-        'prob': str(prob)
-    })
+    return JSONResponse({'result': str(prediction), 'prob': str(prob)})
 
 
 if __name__ == '__main__':
