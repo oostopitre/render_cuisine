@@ -12,13 +12,13 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
 from starlette.staticfiles import StaticFiles
 
-export_file_url = 'https://www.dropbox.com/s/6bgq8t6yextloqp/export.pkl?raw=1'
-export_file_name = 'export.pkl'
-classes = ['black', 'grizzly', 'teddys']
+# export_file_url = 'https://www.dropbox.com/s/6bgq8t6yextloqp/export.pkl?raw=1'
+# classes = ['black', 'grizzly', 'teddys']
 
-# export_file_url = 'https://www.dropbox.com/s/gyp2a396l1pil6n/cuisine-stage-3-res50.pth?raw=1'
-# export_file_name = 'cuisine.pth'
-# classes = ['mexican', 'indian', 'japanese', 'italian', 'chinese']
+export_file_url = 'https://www.dropbox.com/s/3k3d28h8gcmkjwh/export.pkl?dl=1'
+classes = ['mexican', 'indian', 'japanese', 'italian', 'chinese']
+
+export_file_name = 'export.pkl'
 
 path = Path(__file__).parent
 

@@ -1,9 +1,11 @@
-# Specific files and folders to ignore
-app/export.pkl
+# Specific locations to ignore
 classifier/data/images
+classifier/data/models
 
-# filetype to ignore
+# filetypes to ignore
 *.pyc
 *.egg-info/
 .DS_store
 .DS_Store
+*.pkl
+*.pth
