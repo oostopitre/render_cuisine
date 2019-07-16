@@ -17,7 +17,7 @@ export_file_name = 'export.pkl'
 classes = ['black', 'grizzly', 'teddys']
 
 # export_file_url = 'https://www.dropbox.com/s/gyp2a396l1pil6n/cuisine-stage-3-res50.pth?raw=1'
-# export_file_name = 'cuisine'
+# export_file_name = 'cuisine.pth'
 # classes = ['mexican', 'indian', 'japanese', 'italian', 'chinese']
 
 path = Path(__file__).parent
